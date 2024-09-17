@@ -1,7 +1,4 @@
 import { Background, Button, Container, InfosContainer, Input, InputContainer, Label, Title } from "./styles";
-import LoginP from "../../../public/login-container.svg"
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
 
 const Login = () => {
     return (

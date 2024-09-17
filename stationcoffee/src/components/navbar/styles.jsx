@@ -4,7 +4,7 @@ export const Container = styled.div`
     width: 100vw;
     height: 7vh;
     top: 0;
-    position: fixed;
+    position: relative;
     background-color: #1E1916;
     justify-content: space-between;
     align-items: center;
