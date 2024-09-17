@@ -6,7 +6,6 @@ import Footer from "../../components/footer";
 const Login = () => {
     return (
         <Container>
-            <Navbar />
             <Background>
                 <InfosContainer>
                     <Title>Seja Bem-vindo!</Title>
@@ -21,7 +20,6 @@ const Login = () => {
                     </Button>
                 </InfosContainer>
             </Background>
-            <Footer />
         </Container>
     )
 }

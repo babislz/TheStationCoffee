@@ -1,16 +1,16 @@
 import CardOrderStyle from "../../components/cardStyle1";
-import Footer2 from "../../components/footerAll";
-import Navbar2 from "../../components/navbarAll";
+import Footer from "../../components/footer";
+import Navbar from "../../components/navbar";
 import { Container } from "../login/styles";
 
 const Order = () => {
     return (
         <>
-            <Navbar2 />
+            <Navbar />
             <Container >
                 <CardOrderStyle />
             </Container>
-            <Footer2 />
+            <Footer />
         </>
     )
 }
