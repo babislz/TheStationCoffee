@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 100vw;
+    width: auto;
+    max-width: 100vw;
     height: 7vh;
     top: 0;
     position: relative;
@@ -9,9 +10,11 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     display: flex;
-    padding-left:20px;
 `
 
 export const Profile = styled.image`
-    margin-right: 40px;
+    position: relative;
+    right: 20px;
+    margin: 0;
+    padding: 0;
 `
