@@ -1,16 +1,27 @@
 import CardOrderStyle from "../../components/cardStyle1";
-import Footer from "../../components/footer";
 import Navbar from "../../components/navbar";
-import { Container } from "../login/styles";
+import { CardsContainer, PageContainer } from "./styles";
 
 const Order = () => {
     return (
         <>
             <Navbar />
-            <Container >
-                <CardOrderStyle />
-            </Container>
-            <Footer />
+            <PageContainer >
+                <CardsContainer>
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                    <CardOrderStyle />
+                </CardsContainer>
+            </PageContainer>
         </>
     )
 }
