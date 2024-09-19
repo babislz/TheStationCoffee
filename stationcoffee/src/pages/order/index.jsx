@@ -48,8 +48,10 @@ const Order = () => {
                                 fontSize: '1rem',
                                 borderRadius: '15px',
                                 border: 'none',
-                                marginBottom: '20px'
-                            }}>Fazer Pedido</button>    
+                                marginBottom: '20px',
+                                backgroundColor: '#362C25',
+                                color: 'white'
+                            }}>Fazer Pedido</button>
                         </div>
                     </Price>
                 </SecondPartContainer>
