@@ -7,15 +7,21 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 `
 
 export const ContentContainer = styled.div`
-    margin-top: 150px;
-    width: 60vw;
+    width: 100%;
+    margin-top: 30px;
+    max-width: 1250px;
     height: 75vh;
     border-radius: 10px;
     border: 2px solid #362c25;
     flex-wrap: wrap;
     flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     gap: 20px;
+    overflow-y: auto; 
 `
