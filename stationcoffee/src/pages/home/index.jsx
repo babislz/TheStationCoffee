@@ -3,6 +3,7 @@ import CartButton from "../../components/cartButton";
 import Navbar from "../../components/navbar";
 import SearchBar from "../../components/searchBar";
 import { Container, StyledButton } from "./styles";
+import Decoration from "../../../public/decoration.svg"
 
 const Home = () => {
     return (
@@ -28,8 +29,21 @@ const Home = () => {
                         </StyledButton>
                     </div>
                 </div>
-                {/* <CarouselCard></CarouselCard> */}
-                <Carousel></Carousel>
+                <div style={{
+                    paddingLeft:'10vw',
+                    paddingRight:'10vw',
+                    display:'flex',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    fontFamily:'Kalam',
+                    paddingTop:'6vh'
+                }}>
+                    <Carousel></Carousel>
+                </div>
+                <img src={Decoration} alt='' style={{
+                    marginLeft:'10vw',
+                    maxWidth:'80vw'
+                }}/>
             </Container>
         </>
     )

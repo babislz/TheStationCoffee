@@ -1,6 +1,8 @@
 import { useState } from "react";
 import CarouselCard from "../carouselCard";
 import { Ul } from "./styles";
+import RightArrow from "../../../public/seta-direita.svg"
+import LeftArrow from "../../../public/seta-esquerda.svg"
 
 const Carousel = () => {
     const [list] = useState([
@@ -40,12 +42,12 @@ const Carousel = () => {
     return (
         <>
             <Ul>
-                <button onClick={HandleDown}>
-                    <h1>{"<"}</h1>
+                <button onClick={HandleDown} style={{ background: 'transparent', border: 'none'}}>
+                    <img src={LeftArrow} alt=''/>
                 </button>
                 <RenderCarousel />
-                <button onClick={HandleUp}>
-                    <h1>{">"}</h1>
+                <button onClick={HandleUp} style={{ background: 'transparent', border: 'none'}}>
+                    <img src={RightArrow} alt=''/>
                 </button>
             </Ul>
         </>
