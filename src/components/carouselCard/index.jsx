@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
-
 import { Container, ProdImage, Titles } from "./styles";
 import Cafe from "../../../public/cafe.jpg"
+
 
 const CarouselCard = ({item}) => {
     return (

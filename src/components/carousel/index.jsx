@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CarouselCard from "../carouselCard";
 import { Ul } from "./styles";
-import RightArrow from "../../../public/seta-direita.svg"
-import LeftArrow from "../../../public/seta-esquerda.svg"
+import RightArrow from "../../../public/seta-direita.svg";
+import LeftArrow from "../../../public/seta-esquerda.svg";
+import { getAllProducts } from '../../service/api'; 
 
 const Carousel = () => {
-    const [list] = useState([
-        { Id: 0, Title: 'Café 0', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 1, Title: 'Café 1', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 2, Title: 'Café 2', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 3, Title: 'Café 3', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 4, Title: 'Café 4', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 5, Title: 'Café 5', Description: 'Lorem Ipsum', Price: '0,00' },
-        { Id: 6, Title: 'Café 6', Description: 'Lorem Ipsum', Price: '0,00' },
-    ]);
-
-    const length = 5; // Number of items to show at once
+    const [list, setList] = useState([]);
+    const length = 5;
     const [startIndex, setStartIndex] = useState(0);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getAllProducts(); 
+                setList(data);
+            }catch (error){
+                console.error("Erro ao buscar produtos:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const RenderCarousel = () => {
         const displayedItems = [
@@ -25,7 +30,7 @@ const Carousel = () => {
         ].slice(0, length);
 
         return displayedItems.map(i => (
-            <li key={i.Id}>
+            <li key={i._id}>
                 <CarouselCard item={i} />
             </li>
         ));
@@ -45,7 +50,7 @@ const Carousel = () => {
                 <button onClick={HandleDown} style={{ background: 'transparent', border: 'none'}}>
                     <img src={LeftArrow} alt=''/>
                 </button>
-                <RenderCarousel />
+                {list.length > 0 ? <RenderCarousel /> : <p>Carregando...</p>} 
                 <button onClick={HandleUp} style={{ background: 'transparent', border: 'none'}}>
                     <img src={RightArrow} alt=''/>
                 </button>
