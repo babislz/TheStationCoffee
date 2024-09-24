@@ -7,6 +7,10 @@ import Decoration from "../../../public/decoration.svg";
 import AddButton from "../../components/addButton"; 
 import ModalCreateProd from "../../components/createProductCard";
 import { useState } from "react";
+import Decoration from "../../../public/decoration.svg"
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Home = () => {
     const [isOpen, setModalOpen] = useState(false);
@@ -20,6 +24,18 @@ const Home = () => {
         console.log("Fechando modal");
         setModalOpen(false);
     }
+
+    const params = useParams();
+
+    const getTableSession = async () => {
+        const res = await axios.get(`http://localhost:8080/api/client/table?id=${params.tableId}&user=66f1768ae1bb0d93f3b0474a`, {headers: {token: sessionStorage.getItem("token")}})
+        console.log(res);
+    }
+
+    useEffect(() => {
+        getTableSession()
+        console.log(params)
+    }, []);
 
     return (
         <>
@@ -38,7 +54,7 @@ const Home = () => {
                         display:'flex',
                         gap:'2vw'
                     }}>
-                        <h1>Mesa: 12</h1>
+                        <h1>Mesa: {params.tableId}</h1>
                         <StyledButton>
                             <CartButton/>
                         </StyledButton>
