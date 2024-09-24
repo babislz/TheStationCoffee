@@ -11,7 +11,7 @@ export const Container = styled.div`
     position: absolute;
 `
 
-export const Profile = styled.image`
+export const Profile = styled.img`
     position: relative;
     right: 20px;
     margin: 0;

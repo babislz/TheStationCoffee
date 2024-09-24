@@ -6,9 +6,7 @@ const Navbar = () => {
     return(
         <Container>
             <img src={MenuButton} alt=""/>
-            <Profile>
-                <img src={ProfileImg} alt=""/>
-            </Profile>
+            <Profile src={ProfileImg} alt=""/>
         </Container>
     )
 }
