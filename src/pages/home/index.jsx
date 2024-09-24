@@ -7,7 +7,6 @@ import Decoration from "../../../public/decoration.svg";
 import AddButton from "../../components/addButton"; 
 import ModalCreateProd from "../../components/createProductCard";
 import { useState } from "react";
-import Decoration from "../../../public/decoration.svg"
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
