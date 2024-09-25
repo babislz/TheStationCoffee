@@ -59,7 +59,7 @@ const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
                     }}
                 />
                 <All>
-                    <ImageUpload onImageSelect={(image) => setFormData({ ...formData, image })}/>
+                    <ImageUpload onImageSelect={(image) => setFormData({ ...formData, image: image ?? "test" })}/>
                     <InputContainer>
                         <Divisions>
                             <Label htmlFor="name">Nome:</Label>
