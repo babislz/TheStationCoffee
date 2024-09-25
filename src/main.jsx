@@ -5,6 +5,7 @@ import './index.css'
 import Home from './pages/home'
 import Login from './pages/login'
 import Order from './pages/order'
+import Mesas from './pages/mesas'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/order",
     element: <Order/>
+  },
+  {
+    path: "/tables",
+    element: <Mesas/>
   }
 ]);
 
