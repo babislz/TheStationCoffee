@@ -7,47 +7,48 @@ import LeftArrow from "../../../public/seta-esquerda.svg";
 const Carousel = ({ products }) => {
     const [list, setList] = useState(products);
     const length = 5;
-    const [startIndex, setStartIndex] = useState(0); 
+    const [startIndex, setStartIndex] = useState(0);
 
     useEffect(() => {
         setList(products);
+        setStartIndex(0); 
     }, [products]);
 
     const RenderCarousel = () => {
-        const displayedItems = [
-            ...list.slice(startIndex),
-            ...list.slice(0, (startIndex + length) % list.length)
-        ].slice(0, length);
+        const displayedItems = [];
 
-        return displayedItems.map(i => (
-            <li key={i._id}>
-                <CarouselCard item={i} /> 
+        for (let i = 0; i < length; i++) {
+            const index = (startIndex + i) % list.length;
+            displayedItems.push(list[index]);
+        }
+
+        return displayedItems.map(item => (
+            <li key={item._id}>
+                <CarouselCard item={item} />
             </li>
         ));
     };
 
-    const HandleDown = () => {
+    const handleDown = () => {
         setStartIndex(prev => (prev - 1 + list.length) % list.length);
     };
 
-    const HandleUp = () => {
+    const handleUp = () => {
         setStartIndex(prev => (prev + 1) % list.length);
     };
 
     return (
-        <>
-            <Ul>
-                <button onClick={HandleDown} style={{ background: 'transparent', border: 'none' }}>
-                    <img src={LeftArrow} alt='' />
-                </button>
-                
-                {list.length > 0 ? <RenderCarousel /> : <p>Carregando...</p>} 
+        <Ul>
+            <button onClick={handleDown} style={{ background: 'transparent', border: 'none' }}>
+                <img src={LeftArrow} alt='Left arrow' />
+            </button>
+            
+            {list.length > 0 ? <RenderCarousel /> : <p>Loading...</p>} 
 
-                <button onClick={HandleUp} style={{ background: 'transparent', border: 'none' }}>
-                    <img src={RightArrow} alt='' />
-                </button>
-            </Ul>
-        </>
+            <button onClick={handleUp} style={{ background: 'transparent', border: 'none' }}>
+                <img src={RightArrow} alt='Right arrow' />
+            </button>
+        </Ul>
     );
 };
 
