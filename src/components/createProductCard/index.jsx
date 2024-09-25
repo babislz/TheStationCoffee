@@ -2,13 +2,14 @@ import { All, Container, Divisions, Input, InputContainer, Label, Overlay } from
 import X from "../../../public/x.svg";
 import ImageUpload from "../uploadImage";
 import { useState } from "react";
+import axios from "axios";
 
 const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
     const [ formData, setFormData ] = useState({
         name: '',
         category: '',
         price: '',
-        image: ''
+        image: 'upload.svg'
     });
 
     const handleChange = (e) => {
@@ -17,32 +18,25 @@ const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
     };
 
     const handleSubmit = async () => {
-        const token = localStorage.getItem('token');
-        
-        const formDataToSend = new FormData();
-        formDataToSend.append('name', formData.name);
-        formDataToSend.append('category', formData.category);
-        formDataToSend.append('price', formData.price);
-        formDataToSend.append('image', formData.image); 
+        const formDataToSend = {
+            name: formData.name,
+            category: formData.category,
+            price: formData.price,
+            image: formData.image
+        }
     
+        console.log(formDataToSend);
         try {
-            const response = await fetch('http://localhost:8080/api/products', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}` 
-                },
-                body: formDataToSend,
+            const response = await axios.post('http://localhost:8080/api/product', formDataToSend, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
     
-            if (response.ok) {
-                console.log("Produto salvo com sucesso");
-                onProductCreated();
-                onClose(); 
-            } else {
-                console.error("Erro ao salvar produto");
-            }
+            console.log("Produto salvo com sucesso", response);
+            onProductCreated();
+            onClose(); 
+
         } catch (error) {
-            console.error("Erro de requisição", error);
+            console.error("Erro de requisição", error.message);
         }
     };
     

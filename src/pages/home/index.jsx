@@ -11,9 +11,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const Home = () => {
-  const role = localStorage.getItem("role");
   const [isOpen, setModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const params = useParams();
+  const role = localStorage.getItem("role");
 
   const openModal = () => {
     console.log("Abrindo modal");
@@ -25,20 +26,25 @@ const Home = () => {
     setModalOpen(false);
   };
 
-  const params = useParams();
 
   const getTableSession = async () => {
     const res = await axios.get(
       `http://localhost:8080/api/client/table?id=${params.tableId}&user=66f1768ae1bb0d93f3b0474a`
     );
+
+    localStorage.setItem("token", res.data.token);
     sessionStorage.setItem("token", res.data.token);
-    console.log("teste", res);
+    localStorage.setItem("role", res.data.user.role);
+
+    const decoded = JSON.parse(atob(res.data.token));
+    console.log(res);
+    console.log(decoded);
   };
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products", {
-        headers: { token: sessionStorage.getItem("token") },
+      const response = await axios.get("http://localhost:8080/api/product", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       });
       setProducts(response.data);
     } catch (error) {
