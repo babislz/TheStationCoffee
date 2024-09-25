@@ -9,7 +9,7 @@ const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
         name: '',
         category: '',
         price: '',
-        image: 'upload.svg'
+        image: ''
     });
 
     const handleChange = (e) => {
