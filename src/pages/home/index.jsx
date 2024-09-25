@@ -6,13 +6,14 @@ import { Container, StyledButton } from "./styles";
 import Decoration from "../../../public/decoration.svg";
 import AddButton from "../../components/addButton"; 
 import ModalCreateProd from "../../components/createProductCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 const Home = () => {
     const [isOpen, setModalOpen] = useState(false);
+    const [products, setProducts] = useState([]); 
+    const params = useParams();
 
     const openModal = () => {
         console.log("Abrindo modal");
@@ -24,16 +25,23 @@ const Home = () => {
         setModalOpen(false);
     }
 
-    const params = useParams();
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/products', {
+                headers: { token: sessionStorage.getItem("token") },
+            });
+            setProducts(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar produtos:", error);
+        }
+    };
 
-    const getTableSession = async () => {
-        const res = await axios.get(`http://localhost:8080/api/client/table?id=${params.tableId}&user=66f1768ae1bb0d93f3b0474a`, {headers: {token: sessionStorage.getItem("token")}})
-        console.log(res);
-    }
+    const handleProductCreation = async () => {
+        await fetchProducts();
+    };
 
     useEffect(() => {
-        getTableSession()
-        console.log(params)
+        fetchProducts(); 
     }, []);
 
     return (
@@ -60,7 +68,7 @@ const Home = () => {
                         <StyledButton>
                             <AddButton onClick={openModal} />
                         </StyledButton>
-                        <ModalCreateProd isOpen={isOpen} onClose={closeModal} />
+                        <ModalCreateProd isOpen={isOpen} onClose={closeModal} onProductCreated={handleProductCreation} />
                     </div>
                 </div>
                 <div style={{
@@ -72,7 +80,7 @@ const Home = () => {
                     fontFamily:'Kalam',
                     paddingTop:'6vh'
                 }}>
-                    <Carousel />
+                    <Carousel products={products} /> 
                 </div>
                 <img src={Decoration} alt='' style={{
                     marginLeft:'10vw',
