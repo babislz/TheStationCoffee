@@ -26,7 +26,7 @@ const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
         formDataToSend.append('image', formData.image); 
     
         try {
-            const response = await fetch('http://localhost:8080/api/products', {
+            const response = await fetch('http://localhost:8080/api/product', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}` 
