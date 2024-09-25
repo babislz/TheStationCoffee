@@ -1,36 +1,51 @@
-import { All, Container, Divisions, Input, InputContainer, Label, Overlay } from "./styles"; // Importe o Overlay
+import { All, Container, Divisions, Input, InputContainer, Label, Overlay } from "./styles";
 import X from "../../../public/x.svg";
 import ImageUpload from "../uploadImage";
+import { useState } from "react";
 
-const handleSubmit = async () => {
-    const productData = {
-        name: document.getElementById('name').value,
-        price: document.getElementById('price').value,
-        description: document.getElementById('desc').value,
+const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
+    const [ formData, setFormData ] = useState({
+        name: '',
+        category: '',
+        price: '',
+        image: ''
+    });
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
     };
 
-    try {
-        const response = await fetch('URL_DA_SUA_API/produtos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(productData),
-        });
-
-        if (response.ok) {
-            console.log('Produto cadastrado com sucesso');
-            onClose(); 
-        } else {
-            console.error('Erro ao cadastrar produto');
+    const handleSubmit = async () => {
+        const token = localStorage.getItem('token');
+        
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('category', formData.category);
+        formDataToSend.append('price', formData.price);
+        formDataToSend.append('image', formData.image); 
+    
+        try {
+            const response = await fetch('http://localhost:8080/api/products', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: formDataToSend,
+            });
+    
+            if (response.ok) {
+                console.log("Produto salvo com sucesso");
+                onProductCreated();
+                onClose(); 
+            } else {
+                console.error("Erro ao salvar produto");
+            }
+        } catch (error) {
+            console.error("Erro de requisição", error);
         }
-    } catch (error) {
-        console.error('Erro de rede:', error);
-    }
-};
-
-
-const ModalCreateProd = ({ isOpen, onClose }) => {
+    };
+    
     if (!isOpen) return null;
 
     return (
@@ -50,30 +65,19 @@ const ModalCreateProd = ({ isOpen, onClose }) => {
                     }}
                 />
                 <All>
-                    <ImageUpload />
+                    <ImageUpload onImageSelect={(image) => setFormData({ ...formData, image })}/>
                     <InputContainer>
                         <Divisions>
                             <Label htmlFor="name">Nome:</Label>
-                            <Input type="text" id="name" />
+                            <Input type="text" id="name" value={formData.name} onChange={handleChange} />                        
                         </Divisions>
                         <Divisions>
                             <Label htmlFor="price">Preço:</Label>
-                            <Input type="text" id="price" />
+                            <Input type="text" id="price" value={formData.price} onChange={handleChange} />                        
                         </Divisions>
                         <Divisions>
-                            <Label htmlFor="desc">Descrição:</Label>
-                            <textarea
-                                rows={12}
-                                id="desc"
-                                style={{
-                                    width: "100%",
-                                    resize: "none",
-                                    borderRadius: "8px",
-                                    padding: "10px",
-                                    border: "none",
-                                    boxSizing: "border-box",
-                                }}
-                            ></textarea>
+                            <Label htmlFor="category">Categoria:</Label>
+                            <Input type="text" id="category" value={formData.category} onChange={handleChange} />
                         </Divisions>
                         <button
                             style={{
@@ -82,7 +86,7 @@ const ModalCreateProd = ({ isOpen, onClose }) => {
                                 alignSelf: "flex-end",
                                 borderRadius: "10px",
                                 border: "1px solid black",
-                                marginTop: "20px",
+                                marginTop: "50px",
                                 fontFamily: "Kalam",
                                 fontSize: "1.15rem",
                                 cursor: "pointer",

@@ -6,14 +6,14 @@ import { Container, StyledButton } from "./styles";
 import Decoration from "../../../public/decoration.svg";
 import AddButton from "../../components/addButton";
 import ModalCreateProd from "../../components/createProductCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 const Home = () => {
+  const role = localStorage.getItem("role");
   const [isOpen, setModalOpen] = useState(false);
-  const role = localStorage.getItem('role');
+  const [products, setProducts] = useState([]);
 
   const openModal = () => {
     console.log("Abrindo modal");
@@ -35,16 +35,40 @@ const Home = () => {
     console.log("teste", res);
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/products", {
+        headers: { token: sessionStorage.getItem("token") },
+      });
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  };
+
+  const handleProductCreation = async () => {
+    await fetchProducts();
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   useEffect(() => {
     getTableSession();
     console.log(params);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function RenderButton() {
     if (role == "client") {
       return <></>;
     }
-    return <StyledButton><AddButton onClick={openModal} /></StyledButton>;
+    return (
+      <StyledButton>
+        <AddButton onClick={openModal} />
+      </StyledButton>
+    );
   }
 
   return (
@@ -73,7 +97,11 @@ const Home = () => {
               <CartButton />
             </StyledButton>
             <RenderButton/>
-            <ModalCreateProd isOpen={isOpen} onClose={closeModal} />
+            <ModalCreateProd
+              isOpen={isOpen}
+              onClose={closeModal}
+              onProductCreated={handleProductCreation}
+            />
           </div>
         </div>
         <div
@@ -87,7 +115,7 @@ const Home = () => {
             paddingTop: "6vh",
           }}
         >
-          <Carousel />
+          <Carousel products={products} />
         </div>
         <img
           src={Decoration}

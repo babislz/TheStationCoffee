@@ -3,25 +3,15 @@ import CarouselCard from "../carouselCard";
 import { Ul } from "./styles";
 import RightArrow from "../../../public/seta-direita.svg";
 import LeftArrow from "../../../public/seta-esquerda.svg";
-import { getAllProducts } from '../../service/api'; 
 
-const Carousel = () => {
-    const [list, setList] = useState([]);
+const Carousel = ({ products }) => {
+    const [list, setList] = useState(products);
     const length = 5;
-    const [startIndex, setStartIndex] = useState(0);
+    const [startIndex, setStartIndex] = useState(0); 
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const data = await getAllProducts(); 
-                setList(data);
-            }catch (error){
-                console.error("Erro ao buscar produtos:", error);
-            }
-        };
-
-        fetchProducts();
-    }, []);
+        setList(products);
+    }, [products]);
 
     const RenderCarousel = () => {
         const displayedItems = [
@@ -31,7 +21,7 @@ const Carousel = () => {
 
         return displayedItems.map(i => (
             <li key={i._id}>
-                <CarouselCard item={i} />
+                <CarouselCard item={i} /> 
             </li>
         ));
     };
@@ -47,12 +37,14 @@ const Carousel = () => {
     return (
         <>
             <Ul>
-                <button onClick={HandleDown} style={{ background: 'transparent', border: 'none'}}>
-                    <img src={LeftArrow} alt=''/>
+                <button onClick={HandleDown} style={{ background: 'transparent', border: 'none' }}>
+                    <img src={LeftArrow} alt='' />
                 </button>
+                
                 {list.length > 0 ? <RenderCarousel /> : <p>Carregando...</p>} 
-                <button onClick={HandleUp} style={{ background: 'transparent', border: 'none'}}>
-                    <img src={RightArrow} alt=''/>
+
+                <button onClick={HandleUp} style={{ background: 'transparent', border: 'none' }}>
+                    <img src={RightArrow} alt='' />
                 </button>
             </Ul>
         </>
