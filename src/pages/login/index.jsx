@@ -24,7 +24,8 @@ const Login = () => {
                 navigate("/admin");
                 return
             } else if (response.data.role == "staff") {
-                navigate("/mesas");
+                navigate("/tables");
+                return
             }
 
             navigate("/");

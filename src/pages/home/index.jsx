@@ -15,6 +15,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const params = useParams();
   const role = localStorage.getItem("role");
+  const [token, setToken] = useState(localStorage.getItem('token'))
 
   const openModal = () => {
     console.log("Abrindo modal");
@@ -33,12 +34,9 @@ const Home = () => {
     );
 
     localStorage.setItem("token", res.data.token);
-    sessionStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.user.role);
 
-    const decoded = JSON.parse(atob(res.data.token));
-    console.log(res);
-    console.log(decoded);
+    setToken(res.data.token);
   };
 
   const fetchProducts = async () => {
@@ -57,14 +55,14 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
     getTableSession();
     console.log(params);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  useEffect(() => {
+    fetchProducts();
+  }, [token])
 
   function RenderButton() {
     if (role == "client") {
