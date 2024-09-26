@@ -122,6 +122,7 @@ const Home = () => {
           }}
         >
           <Carousel products={products} />
+        
         </div>
         <img
           src={Decoration}
@@ -131,6 +132,44 @@ const Home = () => {
             maxWidth: "80vw",
           }}
         />
+        <div style={{
+            paddingLeft: "10vw",
+            paddingRight: "10vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "Kalam",
+            paddingTop: "6vh",
+            flexDirection: 'column',
+            gap: '130px'
+          }}>
+            <Carousel products={products} />
+            <Carousel products={products} />
+            <Carousel products={products} />
+        </div>
+        <img
+          src={Decoration}
+          alt=""
+          style={{
+            marginLeft: "10vw",
+            maxWidth: "80vw",
+          }}
+        />
+          <div style={{
+            paddingLeft: "10vw",
+            paddingRight: "10vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "Kalam",
+            paddingTop: "6vh",
+            flexDirection: 'column',
+            gap: '130px',
+            paddingBottom: '150px'
+          }}>
+            <Carousel products={products} />
+            <Carousel products={products} />
+        </div>
       </Container>
     </>
   );
