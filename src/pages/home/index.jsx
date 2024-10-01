@@ -30,7 +30,7 @@ const Home = () => {
 
   const getTableSession = async () => {
     const res = await axios.get(
-      `http://localhost:8080/api/client/table?id=${params.tableId}&user=66f54f602d5360211b138664`
+      `http://localhost:8080/api/client/table?id=${params.tableId}&user=66fbe07c11f6c94931824da7`
     );
 
     localStorage.setItem("token", res.data.token);
