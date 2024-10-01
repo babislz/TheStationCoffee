@@ -2,13 +2,14 @@ import { All, Container, Divisions, Input, InputContainer, Label, Overlay } from
 import X from "../../../public/x.svg";
 import ImageUpload from "../uploadImage";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
-const ModalEditProd = ({ isOpen, onClose, product }) => {
+const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
     const [formData, setFormData] = useState({
         name: '',
         category: '',
         price: '',
-        image: ''
+        image: '' 
     });
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const ModalEditProd = ({ isOpen, onClose, product }) => {
                 name: product.name || '',
                 category: product.category || '',
                 price: product.price || '',
-                image: product.image || ''
+                image: product.image || '' 
             });
         }
     }, [product]);
@@ -28,7 +29,32 @@ const ModalEditProd = ({ isOpen, onClose, product }) => {
     };
 
     const handleSubmit = async () => {
-        // Lógica para enviar os dados editados para o backend
+        const formDataToSend = {
+            name: formData.name,
+            category: formData.category,
+            price: formData.price,
+            image: formData.image 
+        };
+
+        try {
+            const response = await axios.put(`http://localhost:8080/api/product/${product._id}`, formDataToSend, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json' 
+                }
+            });
+            
+            console.log('Produto atualizado com sucesso', response);
+            onProductUpdated(); 
+            onClose();
+
+        } catch (error) {
+            console.error('Erro ao atualizar produto', error.response ? error.response.data : error.message);
+        }
+    };
+
+    const handleImageSelect = (image) => {
+        setFormData({ ...formData, image });
     };
 
     if (!isOpen) return null;
@@ -39,7 +65,7 @@ const ModalEditProd = ({ isOpen, onClose, product }) => {
             <Container>
                 <img onClick={onClose} src={X} alt="close" style={{ cursor: "pointer" }} />
                 <All>
-                    <ImageUpload onImageSelect={(image) => setFormData({ ...formData, image })} />
+                    <ImageUpload onImageSelect={handleImageSelect} />
                     <InputContainer>
                         <Divisions>
                             <Label htmlFor="name">Nome:</Label>
