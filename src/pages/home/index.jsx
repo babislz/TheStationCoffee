@@ -18,21 +18,28 @@ const Home = () => {
   const [token, setToken] = useState(localStorage.getItem('token'))
 
   const openModal = () => {
-    console.log("Abrindo modal");
     setModalOpen(true);
   };
 
   const closeModal = () => {
-    console.log("Fechando modal");
     setModalOpen(false);
   };
-
+  
+  useEffect(() => {
+    getTableSession();
+    console.log(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getTableSession = async () => {
-    const res = await axios.get(
-      `http://localhost:8080/api/client/table?id=${params.tableId}&user=66fbe07c11f6c94931824da7`
+    const role = "client";
+    const userId = await axios.get(
+      `http://localhost:8080/api/user?role=${role}`
     );
-
+    
+    const res = await axios.get(
+      `http://localhost:8080/api/client/table?id=${params.tableId}&user=${userId}`
+    );
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.user.role);
 
@@ -53,12 +60,6 @@ const Home = () => {
   const handleProductCreation = async () => {
     await fetchProducts();
   };
-
-  useEffect(() => {
-    getTableSession();
-    console.log(params);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   
   useEffect(() => {
     fetchProducts();

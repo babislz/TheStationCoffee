@@ -2,7 +2,6 @@ import { Container, ProdImage, Titles } from "./styles";
 import Cafe from "../../../public/cafe.jpg"; 
 
 const CarouselCard = ({item}) => {
-    console.log(item)
     return (
         <Container>
             <ProdImage src={item.image || Cafe} alt={item.name} /> 
