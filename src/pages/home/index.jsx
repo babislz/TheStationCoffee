@@ -36,9 +36,9 @@ const Home = () => {
     const userId = await axios.get(
       `http://localhost:8080/api/user?role=${role}`
     );
-    
+
     const res = await axios.get(
-      `http://localhost:8080/api/client/table?id=${params.tableId}&user=${userId}`
+      `http://localhost:8080/api/client/table?id=${params.tableId}&user=${userId.data}`
     );
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.user.role);
