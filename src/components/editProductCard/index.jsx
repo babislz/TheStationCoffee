@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { All, Container, Divisions, Input, InputContainer, Label, Overlay } from "./styles";
 import X from "../../../public/x.svg";
 import ImageUpload from "../uploadImage";
@@ -9,7 +10,7 @@ const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
         name: '',
         category: '',
         price: '',
-        image: '' 
+        image: '' ,
     });
 
     useEffect(() => {
@@ -35,7 +36,7 @@ const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
             price: formData.price,
             image: formData.image 
         };
-
+        console.log(product);
         try {
             const response = await axios.put(`http://localhost:8080/api/product/${product._id}`, formDataToSend, {
                 headers: {

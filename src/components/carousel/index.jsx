@@ -66,7 +66,7 @@ const Carousel = ({ products }) => {
                 <ModalEditProd
                     isOpen={!!selectedItem}
                     onClose={closeModal}
-                    item={selectedItem} // Passa o item selecionado para o modal
+                    product={selectedItem} // Passa o item selecionado para o modal
                 />
             )}
         </>
