@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Background = styled.div`
     width: 65vw;
     height: 70vh;
-    background-image: url('../../../public/login-container.svg');
+    background-image: url('public/login-container.svg');
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat; 
