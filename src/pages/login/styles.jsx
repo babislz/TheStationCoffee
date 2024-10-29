@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import loginBackground from "../../assets/login-container.svg";
 
 export const Container = styled.div`
     width: 100vw;
@@ -13,7 +14,7 @@ export const Container = styled.div`
 export const Background = styled.div`
     width: 65vw;
     height: 70vh;
-    background-image: url('public/login-container.svg');
+    background-image: url(${loginBackground});
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat; 
