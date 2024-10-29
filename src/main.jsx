@@ -8,6 +8,7 @@ import Order from './pages/order'
 import Mesas from './pages/mesas'
 import Test from "./pages/test";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Analytics/>
     <SpeedInsights/>
     <RouterProvider router={router} />
   </React.StrictMode>,
