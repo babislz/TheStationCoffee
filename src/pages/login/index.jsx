@@ -12,7 +12,8 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.URL}/api/user/login`, { username: email, password }); //testeee
+            const response = await axios.post(`https://thestationcoffeebackend.onrender.com/api/user/login`, { username: email, password }); //testeee
+            console.log(response)
             const { token } = response.data;
 
             localStorage.setItem("token", token);

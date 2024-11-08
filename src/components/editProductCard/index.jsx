@@ -38,7 +38,7 @@ const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
         };
         console.log(product);
         try {
-            const response = await axios.put(`http://localhost:8080/api/product/${product._id}`, formDataToSend, {
+            const response = await axios.put(`https://thestationcoffeebackend.onrender.com/api/product/${product._id}`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json' 

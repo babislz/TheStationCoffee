@@ -4,6 +4,7 @@ import ImageUpload from "../uploadImage";
 import { useState } from "react";
 import axios from "axios";
 
+// eslint-disable-next-line react/prop-types
 const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
     const [ formData, setFormData ] = useState({
         name: '',
@@ -27,7 +28,7 @@ const ModalCreateProd = ({ isOpen, onClose, onProductCreated }) => {
     
         console.log(formDataToSend);
         try {
-            const response = await axios.post('http://localhost:8080/api/product', formDataToSend, {
+            const response = await axios.post('https://thestationcoffeebackend.onrender.com/api/product', formDataToSend, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
     
