@@ -34,11 +34,11 @@ const Home = () => {
   const getTableSession = async () => {
     const role = "client";
     const userId = await axios.get(
-      `http://localhost:8080/api/user?role=${role}`
+      `https://thestationcoffeebackend.onrender.com/api/user?role=${role}`
     );
 
     const res = await axios.get(
-      `http://localhost:8080/api/client/table?id=${params.tableId}&user=${userId.data}`
+      `https://thestationcoffeebackend.onrender.com/api/client/table?id=${params.tableId}&user=${userId.data}`
     );
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.user.role);
@@ -48,7 +48,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/product", {
+      const response = await axios.get("https://thestationcoffeebackend.onrender.com/api/product", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       });
       setProducts(response.data);
