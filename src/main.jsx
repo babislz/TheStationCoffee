@@ -12,7 +12,7 @@ import { Analytics } from "@vercel/analytics/react"
 
 const router = createBrowserRouter([
   {
-    path: "/:tableId",
+    path: "/home/:tableId",
     element: <Home/>,
   },
   {
