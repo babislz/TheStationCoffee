@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/product';
+const API_URL = `${import.meta.env.URL}/api/product`;
 
 export const createProduct = async (product) => {
     const response = await axios.post(API_URL, product);
