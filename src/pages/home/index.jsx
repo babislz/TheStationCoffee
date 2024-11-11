@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 const Home = () => {
   const [isOpen, setModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const params = useParams();
+  const { tableId } = useParams();
   const role = localStorage.getItem("role");
   const [token, setToken] = useState(localStorage.getItem('token'))
 
@@ -27,7 +27,7 @@ const Home = () => {
   
   useEffect(() => {
     getTableSession();
-    console.log(params);
+    console.log(tableId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -38,7 +38,7 @@ const Home = () => {
     );
 
     const res = await axios.get(
-      `https://thestationcoffeebackend.onrender.com/api/client/table?id=${params.tableId}&user=${userId.data}`
+      `https://thestationcoffeebackend.onrender.com/api/client/table?id=${tableId}&user=${userId.data}`
     );
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", res.data.user.role);
@@ -97,7 +97,7 @@ const Home = () => {
               gap: "2vw",
             }}
           >
-            <h1>Mesa: {params.tableId}</h1>
+            <h1>Mesa: {tableId}</h1>
             <StyledButton>
               <CartButton />
             </StyledButton>
