@@ -1,12 +1,10 @@
-import { Container, Profile } from "./styles";
-import MenuButton from "../../../public/menu.svg"
-import ProfileImg from "../../../public/profile.svg"
+import { Container } from "./styles";
+import LogoBtn from "../../../public/logo.svg"
 
 const Navbar = () => {
     return(
         <Container>
-            <img src={MenuButton} alt=""/>
-            <Profile src={ProfileImg} alt=""/>
+            <img src={LogoBtn} alt=""/>
         </Container>
     )
 }
