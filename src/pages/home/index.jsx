@@ -6,14 +6,15 @@ import { Container, StyledButton } from "./styles";
 import Decoration from "../../../public/decoration.svg";
 import AddButton from "../../components/addButton";
 import ModalCreateProd from "../../components/createProductCard";
+// import ModalDescrProd from "../../components/productDesc";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-// Helper function to group products by category
 const groupProductsByCategory = (products) => {
   return products.reduce((acc, product) => {
-    const { category } = product; // Assuming each product has a `category` field
+    const { category } = product;
     if (!acc[category]) {
       acc[category] = [];
     }
@@ -28,9 +29,22 @@ const Home = () => {
   const { tableId } = useParams();
   const role = localStorage.getItem("role");
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const navigate = useNavigate();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const handleCartClick = async () => {
+    try {
+      await axios.post(
+        // LÓGICA DE REDIRECIONAR PARA A PÁGINA /ORDER COM O ID DA MESA
+      );
+
+      navigate("/order");
+    } catch (error) {
+      console.error("Error while processing the cart:", error);
+    }
+  };
 
   useEffect(() => {
     getTableSession();
@@ -82,7 +96,6 @@ const Home = () => {
     <>
       <Navbar />
       <Container>
-        {/* Header Section */}
         <div
           style={{
             paddingLeft: "10vw",
@@ -102,7 +115,7 @@ const Home = () => {
           >
             <h1>Mesa: {tableId}</h1>
             <StyledButton>
-              <CartButton />
+              <CartButton onClick={handleCartClick} />
             </StyledButton>
             {role !== "client" && (
               <StyledButton>
@@ -150,5 +163,6 @@ const Home = () => {
     </>
   );
 };
+
 
 export default Home;
