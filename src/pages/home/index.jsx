@@ -10,40 +10,49 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+// Helper function to group products by category
+const groupProductsByCategory = (products) => {
+  return products.reduce((acc, product) => {
+    const { category } = product; // Assuming each product has a `category` field
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(product);
+    return acc;
+  }, {});
+};
+
 const Home = () => {
   const [isOpen, setModalOpen] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [groupedProducts, setGroupedProducts] = useState({});
   const { tableId } = useParams();
   const role = localStorage.getItem("role");
-  const [token, setToken] = useState(localStorage.getItem('token'))
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  
   useEffect(() => {
     getTableSession();
-    console.log(tableId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getTableSession = async () => {
-    const role = "client";
-    const userId = await axios.get(
-      `https://thestationcoffeebackend.onrender.com/api/user?role=${role}`
-    );
+    try {
+      const role = "client";
+      const userId = await axios.get(
+        `https://thestationcoffeebackend.onrender.com/api/user?role=${role}`
+      );
 
-    const res = await axios.get(
-      `https://thestationcoffeebackend.onrender.com/api/client/table?id=${tableId}&user=${userId.data}`
-    );
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("role", res.data.user.role);
-
-    setToken(res.data.token);
+      const res = await axios.get(
+        `https://thestationcoffeebackend.onrender.com/api/client/table?id=${tableId}&user=${userId.data}`
+      );
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.user.role);
+      setToken(res.data.token);
+    } catch (error) {
+      console.error("Error fetching table session:", error);
+    }
   };
 
   const fetchProducts = async () => {
@@ -51,35 +60,29 @@ const Home = () => {
       const response = await axios.get("https://thestationcoffeebackend.onrender.com/api/product", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       });
-      setProducts(response.data);
+      const products = response.data;
+
+      // Group products by category
+      const grouped = groupProductsByCategory(products);
+      setGroupedProducts(grouped);
     } catch (error) {
-      console.error("Erro ao buscar produtos:", error);
+      console.error("Error fetching products:", error);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [token]);
 
   const handleProductCreation = async () => {
     await fetchProducts();
   };
-  
-  useEffect(() => {
-    fetchProducts();
-  }, [token])
-
-  function RenderButton() {
-    if (role == "client") {
-      return <></>;
-    }
-    return (
-      <StyledButton>
-        <AddButton onClick={openModal} />
-      </StyledButton>
-    );
-  }
 
   return (
     <>
       <Navbar />
       <Container>
+        {/* Header Section */}
         <div
           style={{
             paddingLeft: "10vw",
@@ -101,7 +104,11 @@ const Home = () => {
             <StyledButton>
               <CartButton />
             </StyledButton>
-            <RenderButton/>
+            {role !== "client" && (
+              <StyledButton>
+                <AddButton onClick={openModal} />
+              </StyledButton>
+            )}
             <ModalCreateProd
               isOpen={isOpen}
               onClose={closeModal}
@@ -109,20 +116,28 @@ const Home = () => {
             />
           </div>
         </div>
-        <div
-          style={{
-            paddingLeft: "10vw",
-            paddingRight: "10vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "Kalam",
-            paddingTop: "6vh",
-          }}
-        >
-          <Carousel products={products} />
-        
-        </div>
+
+        {/* Render Carousels for Each Category */}
+        {Object.entries(groupedProducts).map(([category, products]) => (
+          <div key={category}>
+            <h2 style={{ textAlign: "center", fontFamily: "Kalam" }}>{category}</h2>
+            <div
+              style={{
+                paddingLeft: "10vw",
+                paddingRight: "10vw",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "Kalam",
+                paddingTop: "6vh",
+              }}
+            >
+              <Carousel products={products} />
+            </div>
+          </div>
+        ))}
+
+        {/* Decorations */}
         <img
           src={Decoration}
           alt=""
@@ -131,44 +146,6 @@ const Home = () => {
             maxWidth: "80vw",
           }}
         />
-        <div style={{
-            paddingLeft: "10vw",
-            paddingRight: "10vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "Kalam",
-            paddingTop: "6vh",
-            flexDirection: 'column',
-            gap: '130px'
-          }}>
-            <Carousel products={products} />
-            <Carousel products={products} />
-            <Carousel products={products} />
-        </div>
-        <img
-          src={Decoration}
-          alt=""
-          style={{
-            marginLeft: "10vw",
-            maxWidth: "80vw",
-          }}
-        />
-          <div style={{
-            paddingLeft: "10vw",
-            paddingRight: "10vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "Kalam",
-            paddingTop: "6vh",
-            flexDirection: 'column',
-            gap: '130px',
-            paddingBottom: '150px'
-          }}>
-            <Carousel products={products} />
-            <Carousel products={products} />
-        </div>
       </Container>
     </>
   );
