@@ -64,7 +64,11 @@ const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
         <>
             <Overlay onClick={onClose} />
             <Container>
-                <img onClick={onClose} src={X} alt="close" style={{ cursor: "pointer" }} />
+                <img onClick={onClose} src={X} alt="close" style={{ 
+                    cursor: "pointer",
+                    marginLeft: "90%",
+                    marginTop: "15px"
+                }} />
                 <All>
                     <ImageUpload onImageSelect={handleImageSelect} />
                     <InputContainer>
@@ -80,7 +84,15 @@ const ModalEditProd = ({ isOpen, onClose, product, onProductUpdated }) => {
                             <Label htmlFor="category">Categoria:</Label>
                             <Input type="text" id="category" value={formData.category} onChange={handleChange} />
                         </Divisions>
-                        <button onClick={handleSubmit}>Salvar</button>
+                        <button onClick={handleSubmit} style={{
+                            width: "130px",
+                            height: "40px",
+                            borderRadius: "10px",
+                            border: "none",
+                            cursor: "pointer",
+                            marginTop: "44px",
+                            marginLeft: "75%"
+                        }}>Salvar</button>
                     </InputContainer>
                 </All>
             </Container>

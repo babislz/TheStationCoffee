@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 50vw;
-    background-color: white;
+    background-color: #6a5445;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -24,6 +24,7 @@ export const InputContainer =  styled.div`
     flex-direction: column;
     gap: 15px;
     box-sizing: border-box;
+    margin-bottom: 60px;
 `
 
 export const Input = styled.input`
