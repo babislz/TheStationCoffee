@@ -5,7 +5,7 @@ import Cafe from "../../../public/cafe.jpg"
 const CardOrderStyle = (props) => {
     return (
         <Container>
-            <ProdImage src={Cafe} alt="" />
+            <ProdImage src={props.image || Cafe} alt="" />
             <div>
                 <div style={{
                     display: 'flex',
@@ -22,12 +22,11 @@ const CardOrderStyle = (props) => {
                         justifyContent: 'flex-start',
                         textAlign: 'left'
                     }}>
-                        <Titles style={{ marginBottom: '5px' }}>{props.name}Cafe</Titles>
-                        <p style={{ marginTop: '0' }}>{props.desc}Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero neque vel</p> {/* Ajuste a margem superior */}
+                        <Titles style={{ marginBottom: '5px' }}>{props.name}</Titles>
                     </div>
-                    <img src={Delete} alt="" />
+                    <img src={Delete} alt="" style={{ cursor: "pointer" }} onClick={props.removeItem} />
                 </div>
-                <Titles style={{ margin: '0', paddingLeft: '15px' }}>R$: {props.price}</Titles>
+                <Titles style={{ margin: '0', paddingLeft: '15px' }}>R$: {props.price.toFixed(2).replace(".", ",")} ({props.qtd})</Titles>
             </div>
         </Container>
     )

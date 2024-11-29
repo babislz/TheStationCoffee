@@ -83,6 +83,7 @@ const Carousel = ({ products }) => {
                     price={selectedItem.price}
                     productId={selectedItem._id}
                     onClose={closeModal}
+                    image={selectedItem.image}
                 />
             )}
         </>

@@ -9,15 +9,12 @@ const ProductDescription = (props) => {
         if(!localStorage.getItem("cart"))
             localStorage.setItem("cart", JSON.stringify([]))
         const cart = JSON.parse(localStorage.getItem("cart"))
-        console.log(props.productId);
-        console.log(cart);
         
-        const index = cart.findIndex(item => item.id == props.productId)
-        console.log(index);
+        const index = cart.findIndex(item => item._id == props.productId)
         if(index > -1) {
             cart[index].qtd++
         } else {
-            cart.push({ id: props.productId, qtd: 1 })
+            cart.push({ _id: props.productId, qtd: 1 })
         }
         localStorage.setItem("cart", JSON.stringify(cart))
         props.onClose()
@@ -26,7 +23,7 @@ const ProductDescription = (props) => {
     return(
         <Modal onClick={props.onClose}>
             <Container onClick={(e) => e.stopPropagation()}>
-                <img src={Cafe} alt="" style={{
+                <img src={props.image || Cafe} alt="" style={{
                     objectFit: 'cover',
                     width: '46%',
                     borderTopLeftRadius: '30px'
