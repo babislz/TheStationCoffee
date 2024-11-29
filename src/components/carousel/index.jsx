@@ -4,6 +4,7 @@ import ModalEditProd from "../editProductCard";
 import { Ul } from "./styles";
 import RightArrow from "../../../public/seta-direita.svg";
 import LeftArrow from "../../../public/seta-esquerda.svg";
+import ProductDescription from "../productDesc";
 
 const Carousel = ({ products }) => {
     const [list, setList] = useState(products);
@@ -62,11 +63,17 @@ const Carousel = ({ products }) => {
             </Ul>
 
             {/* Modal de edição, apenas exibido se um item for selecionado */}
-            {selectedItem && (
+            {selectedItem && (window.location.href.includes("admin") ?
                 <ModalEditProd
                     isOpen={!!selectedItem}
                     onClose={closeModal}
                     product={selectedItem} // Passa o item selecionado para o modal
+                /> :
+                <ProductDescription
+                    name={selectedItem.name}
+                    description={selectedItem.description}
+                    prodprice={selectedItem.prodprice}
+                    onClose={() => setSelectedItem(null)}
                 />
             )}
         </>
