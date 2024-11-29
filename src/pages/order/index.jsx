@@ -5,6 +5,7 @@ import Seta from "../../../public/seta.svg"
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Titles } from "../../components/carouselCard/styles";
 
 const Order = () => {
 
@@ -12,8 +13,9 @@ const Order = () => {
     const [products, setProducts] = useState([])
 
     const removeItem = (id) => {
-        setProducts(prev => prev.filter(item => item._id != id))
-        localStorage.setItem("cart", JSON.stringify(products))
+        const filtered = products.filter(item => item._id != id);
+        localStorage.setItem("cart", JSON.stringify(filtered));
+        setProducts(filtered);
     }
 
     useEffect(() => {
@@ -43,7 +45,7 @@ const Order = () => {
                 </Link>
                 <SecondPartContainer>
                     <CardsContainer>
-                        {products.map(item => (
+                        {products.length > 0 ? products.map(item => (
                             <CardOrderStyle 
                                 key={item._id} 
                                 name={item.name} 
@@ -52,8 +54,8 @@ const Order = () => {
                                 qtd={item.qtd}
                                 productId={item._id}
                                 removeItem={() => removeItem(item._id)}
-                            />
-                        ))}
+                            /> 
+                        )) : <Titles>Você não adicionou nenhum produto ainda</Titles>}
                     </CardsContainer>
                     <Price>
                         <div style={{
