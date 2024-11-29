@@ -157,6 +157,7 @@ const Home = () => {
           style={{
             marginLeft: "10vw",
             maxWidth: "80vw",
+            marginTop: "100px",
           }}
         />
       </Container>
