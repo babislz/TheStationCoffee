@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <Login/>
   },
   {
-    path: "/order",
+    path: "/order/:tableId",
     element: <Order/>
   },
   {

@@ -7,6 +7,7 @@ export const Container = styled.div`
     padding: 10px;
     background-color: #6A5445;
     transition: 300ms;
+    cursor: pointer;
 
     &:hover{
         transform: scale(1.02

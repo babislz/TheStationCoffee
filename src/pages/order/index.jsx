@@ -2,17 +2,23 @@ import CardOrderStyle from "../../components/cardStyle1";
 import Navbar from "../../components/navbar";
 import { CardsContainer, PageContainer, Price, SecondPartContainer, TextDivision } from "./styles";
 import Seta from "../../../public/seta.svg"
+import { Link, useParams } from "react-router-dom";
 
 const Order = () => {
+
+    const { tableId } = useParams()
+
     return (
         <>
             <Navbar />
             <PageContainer >
-                <img src={Seta} alt="" style={{
-                    position: 'absolute',
-                    top: '85px',
-                    left: '15px'
-                }}/>
+                <Link to={"/" + tableId}>
+                    <img src={Seta} alt="" style={{
+                        position: 'absolute',
+                        top: '85px',
+                        left: '15px'
+                    }}/>
+                </Link>
                 <SecondPartContainer>
                     <CardsContainer>
                         <CardOrderStyle />

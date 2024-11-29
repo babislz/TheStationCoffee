@@ -33,4 +33,5 @@ export const Button = styled.button`
     height: 50px;
     font-size: 1.3rem;
     padding: 5px;
+    cursor: pointer;
 `

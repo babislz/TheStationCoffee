@@ -5,12 +5,15 @@ import { Ul } from "./styles";
 import RightArrow from "../../../public/seta-direita.svg";
 import LeftArrow from "../../../public/seta-esquerda.svg";
 import ProductDescription from "../productDesc";
+import { v4 as uuid } from "uuid";
 
 const Carousel = ({ products }) => {
     const [list, setList] = useState(products);
     const length = 5;
     const [startIndex, setStartIndex] = useState(0);
     const [selectedItem, setSelectedItem] = useState(null); 
+    console.log(selectedItem);
+    
 
     useEffect(() => {
         setList(products);
@@ -26,7 +29,7 @@ const Carousel = ({ products }) => {
         }
 
         return displayedItems.map(item => (
-            <li key={item._id} onClick={() => handleCardClick(item)}> 
+            <li key={uuid()} onClick={() => handleCardClick(item)}> 
                 <CarouselCard item={item} />
             </li>
         ));
@@ -56,6 +59,11 @@ const Carousel = ({ products }) => {
                 </button>
                 
                 {list.length > 0 ? <RenderCarousel /> : <p>Loading...</p>} 
+                {/* {products.map(product => (
+                    <li key={uuid()} onClick={() => handleCardClick(product)}> 
+                        <CarouselCard item={product} />
+                    </li>
+                ))} */}
 
                 <button onClick={handleUp} style={{ background: 'transparent', border: 'none' }}>
                     <img src={RightArrow} alt='Right arrow' />
@@ -72,8 +80,9 @@ const Carousel = ({ products }) => {
                 <ProductDescription
                     name={selectedItem.name}
                     description={selectedItem.description}
-                    prodprice={selectedItem.prodprice}
-                    onClose={() => setSelectedItem(null)}
+                    price={selectedItem.price}
+                    productId={selectedItem._id}
+                    onClose={closeModal}
                 />
             )}
         </>

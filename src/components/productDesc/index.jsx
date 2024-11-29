@@ -4,9 +4,28 @@ import Cart from "../../../public/cart.svg";
 import X from "../../../public/x.svg";
 
 const ProductDescription = (props) => {
+
+    const addToCart = async () => {
+        if(!localStorage.getItem("cart"))
+            localStorage.setItem("cart", JSON.stringify([]))
+        const cart = JSON.parse(localStorage.getItem("cart"))
+        console.log(props.productId);
+        console.log(cart);
+        
+        const index = cart.findIndex(item => item.id == props.productId)
+        console.log(index);
+        if(index > -1) {
+            cart[index].qtd++
+        } else {
+            cart.push({ id: props.productId, qtd: 1 })
+        }
+        localStorage.setItem("cart", JSON.stringify(cart))
+        props.onClose()
+    }
+
     return(
-        <Modal>
-            <Container>
+        <Modal onClick={props.onClose}>
+            <Container onClick={(e) => e.stopPropagation()}>
                 <img src={Cafe} alt="" style={{
                     objectFit: 'cover',
                     width: '46%',
@@ -21,12 +40,12 @@ const ProductDescription = (props) => {
                     alignItems:'end',
                     marginRight: '30px'
                 }}>
-                    <img src={X} alt="" style={{objectFit: 'cover', width: '50px'}} onClick={props.onClose}/>
+                    <img src={X} alt="" style={{objectFit: 'cover', width: '50px', cursor: "pointer"}} onClick={props.onClose}/>
                     <div style={{
                             textAlign: 'center',
                             marginBottom: '60px'
                         }}>
-                        <h1 style={{ marginBottom: '40px', fontFamily: 'Kalam'}}>Café depresso{props.name}</h1>
+                        <h1 style={{ marginBottom: '40px', fontFamily: 'Kalam'}}>{props.name}</h1>
                         <h2>
                             Um café ideal para dias frios e tristes,
                             os torna reconfortantes e menos difíceis de aturar.
@@ -39,10 +58,10 @@ const ProductDescription = (props) => {
                             width: '100%',
                             marginBottom: '10px'
                         }}>
-                        <h1>R$: 300,00{props.prodprice}</h1>
-                        <Button>
+                        <h1>R$: {props.price.toFixed(2).replace(".", ",")}</h1>
+                        <Button onClick={addToCart}>
                             Adicionar
-                            <img src={Cart} alt="" />
+                            <img src={Cart} alt="" onClick={addToCart} />
                         </Button>
                     </div>
                 </div>
