@@ -1,6 +1,6 @@
 import CardOrderStyle from "../../components/cardStyle1";
 import Navbar from "../../components/navbar";
-import { CardsContainer, PageContainer, Price, SecondPartContainer, TextDivision } from "./styles";
+import { CardsContainer, LoadingOver, PageContainer, Price, SecondPartContainer, TextDivision } from "./styles";
 import Seta from "../../../public/seta.svg"
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const Order = () => {
 
     const { tableId } = useParams()
     const [products, setProducts] = useState([])
+    const [ordering, setOrdering] = useState(false)
 
     const removeItem = (id) => {
         const filtered = products.filter(item => item._id != id);
@@ -19,7 +20,16 @@ const Order = () => {
     }
 
     const order = async () => {
-
+        setOrdering(true)
+        const productsToOrder = []
+        products.forEach(product => {
+            for(let i = 0; i < product.qtd; i++)
+                productsToOrder.push({ ...product, qtd: undefined })
+        })
+        await axios.post("https://thestationcoffeebackend.onrender.com/api/order/" + tableId, { products: productsToOrder })
+        localStorage.removeItem("cart")
+        setProducts([])
+        setOrdering(false)
     }
 
     useEffect(() => {
@@ -60,6 +70,7 @@ const Order = () => {
                                 removeItem={() => removeItem(item._id)}
                             /> 
                         )) : <Titles>Você não adicionou nenhum produto ainda</Titles>}
+                        {ordering && <LoadingOver><div className="loader"></div></LoadingOver>}
                     </CardsContainer>
                     <Price>
                         <div style={{
@@ -83,7 +94,8 @@ const Order = () => {
                                 border: 'none',
                                 marginBottom: '20px',
                                 backgroundColor: '#362C25',
-                                color: 'white'
+                                color: 'white',
+                                cursor: "pointer"
                             }}>Fazer Pedido</button>
                         </div>
                     </Price>

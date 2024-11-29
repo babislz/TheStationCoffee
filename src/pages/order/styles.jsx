@@ -23,7 +23,22 @@ export const CardsContainer = styled.div`
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
     border: 2px solid #362c25;
+    position: relative;
 `;
+
+export const LoadingOver = styled.div`
+    position: absolute;
+    z-index: 200;
+    background-color: rgba(0,0,0,.6);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 
 export const SecondPartContainer = styled.div`
     width: 100%;
