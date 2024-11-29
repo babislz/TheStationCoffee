@@ -18,12 +18,16 @@ const Order = () => {
         setProducts(filtered);
     }
 
+    const order = async () => {
+
+    }
+
     useEffect(() => {
         const data = localStorage.getItem("cart");
         const cart = data ? JSON.parse(data) : [];
         (async () => {
             const fetchData = await Promise.all(cart.map(async (item) => {
-                const { data: product } = await axios.get("http://localhost:8080/api/product/" + item._id, {
+                const { data: product } = await axios.get("https://thestationcoffeebackend.onrender.com/api/product/" + item._id, {
                     headers: { Authorization: "Bearer " + localStorage.getItem("token") },
                 })
                 return { ...product, qtd: item.qtd }
@@ -71,7 +75,7 @@ const Order = () => {
                                 <h1>Total: R$ {products.reduce((acc, item) => item.price * item.qtd + acc, 0).toFixed(2).replace(".", ",")}</h1>
                                 <h1>Mesa { tableId }</h1>
                             </TextDivision>
-                            <button style={{
+                            <button onClick={order} style={{
                                 width: '50%',
                                 height: '50px',
                                 fontSize: '1rem',
